@@ -13,28 +13,25 @@ function Calculator({ workouts, allowSound }) {
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = useCallback(
-    function () {
+  useEffect(() => {
+    function playSound() {
       if (!allowSound) return;
       const sound = new Audio(clickSound);
       sound.play();
-    },
-    [allowSound]
-  );
+    }
+    playSound();
+  }, [duration, allowSound]);
 
   useEffect(() => {
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
-    // playSound();
-  }, [number, sets, speed, durationBreak, playSound]);
+  }, [number, sets, speed, durationBreak]);
 
   function handleInc() {
     setDuration((duration) => Math.floor(duration) + 1);
-    // playSound();
   }
 
   function handleDec() {
     setDuration((duration) => (duration > 1 ? Math.ceil(duration) - 1 : 0));
-    // playSound();
   }
 
   return (
